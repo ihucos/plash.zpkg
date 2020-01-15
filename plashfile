@@ -1,0 +1,28 @@
+--from
+alpine
+
+--apk
+bash
+curl
+gcc
+gnupg
+libc-dev
+make
+python3
+
+--layer
+--run
+
+curl -Lf https://github.com/ihucos/plash.zpkg/raw/master/fuse-overlayfs > /usr/local/bin/fuse-overlayfs
+chmod 755 /usr/local/bin/fuse-overlayfs
+
+#                                              PUT MASTER HERE
+curl -Lf https://github.com/ihucos/plash/archive/dist.tar.gz | tar -xzC / --strip-components=1
+cd /opt/plash/
+make clean
+make
+
+--layer
+--run
+
+apk del gcc libc-dev
